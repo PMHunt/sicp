@@ -1,7 +1,7 @@
 ;;; SICP notes - Ch1
 
 ;; Setup is MIT/GNU v9.2 running in Emacs via Geiser
-;; ETA switched to Guile scheme for now as it has nicer debug
+;; ETA switched to Guile scheme for now as it has nicer ,trace
 
 ;;; 1.1.2 - at the end of this section
 ;; 'It should be clear that the possibility of associating values with symbols and
@@ -62,3 +62,46 @@
 
 (define (cubert x)
   (cubert-iter 1.0 x))
+
+;; 1.9 Peano arithmetic
+
+(define (inc x) (+ 1 x))
+
+(define (dec x) (- x 1))
+
+(define (p+ a b)
+  (if (= a 0)
+      b
+      (inc (p+ (dec a) b)))) ;; if the function is compound, we evaluate the return expression using arguments as params
+
+;; 1.10 Ackermann's function
+
+(define (A x y)
+  (cond ((= y 0) 0)
+        ((= x 0) (* 2 y))
+        ((= y 1) 2)
+        (else (A (- x 1)
+                 (A x (- y 1)))))) ;; same rule as above, only this one goes all over the place before stack unwinds
+
+;; Ex 1.11
+
+(define (fr n)
+  (if (< n 3)
+      n
+      (+ (fr (- n 1)) (* 2 (fr (- n 2))) (* 3 (fr (- n 3))))))
+
+(define (fi-iter a b c count)
+  (if (= count 0)
+      a
+      ;;  (+ (fi-iter (- n 1)) (* 2 (fi-iter (- n 2))) (* 3 (fi-iter (- n 3))))
+      ;; assume we initialise a b c correctly when we call it, which feels ugly
+      (fi-iter b c (+ c (* 2 b) (* 3 a)) (- count 1))))
+
+(define (fi n)
+  (fi-iter 0 1 2 n))
+
+(define (pascal row col)
+  ;; assume representation where all columns justified to the left margin, so row 1 has 1 column,  row 5 has 5 columns
+  (cond ((< row col) 0)
+        ((or (= row col) (= col 1)) 1)
+        (#t (+ (pascal (- row 1) (- col 1)) (pascal (- row 1) col)))))
