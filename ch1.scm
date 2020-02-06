@@ -128,11 +128,15 @@
         ((= kinds-of-coins 4) 25)
         ((= kinds-of-coins 5) 50)))
 
+(define (exp-r b n)
+  (if (= n 0) 1
+     (* b (exp-r b (- n 1))) ))
+
 (define (exp b n)
   (exp-iter b n 1))
 
 (define (even? n)
-  (= (remainder n 2)))
+  (= (remainder n 2) 0 ))
 
 (define (square n)
   (* n n))
@@ -140,4 +144,5 @@
 (define (exp-iter b n a )
   (cond
    ((= n 0) a)
-   ((even? n)  )))
+   ((even? n) (exp-iter b (- n 2) (* a (square b))))
+   (#t (exp-iter b (- n 1) (* a b)))))
