@@ -95,6 +95,7 @@
       a
       ;;  (+ (fi-iter (- n 1)) (* 2 (fi-iter (- n 2))) (* 3 (fi-iter (- n 3))))
       ;; assume we initialise a b c correctly when we call it, which feels ugly
+      ;; this helped https://www.lvguowei.me/post/sicp-goodness-looping/
       (fi-iter b c (+ c (* 2 b) (* 3 a)) (- count 1))))
 
 (define (fi n)
@@ -126,3 +127,17 @@
         ((= kinds-of-coins 3) 10)
         ((= kinds-of-coins 4) 25)
         ((= kinds-of-coins 5) 50)))
+
+(define (exp b n)
+  (exp-iter b n 1))
+
+(define (even? n)
+  (= (remainder n 2)))
+
+(define (square n)
+  (* n n))
+
+(define (exp-iter b n a )
+  (cond
+   ((= n 0) a)
+   ((even? n)  )))
